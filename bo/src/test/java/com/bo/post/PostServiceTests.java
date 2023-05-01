@@ -28,17 +28,17 @@ public class PostServiceTests {
     @InjectMocks
     private PostService postService;
 
-    private PostDto initData(String title, String content) {
+    private PostDto initData() {
         return PostDto.builder()
-                        .title(title)
-                        .content(content)
+                        .title("title1")
+                        .content("content1")
                         .build();
     }
     @DisplayName("create Post, then get Post by postId")
     @Test
     void test1() {
         //given
-        PostDto postDto = initData("title1", "content1");
+        PostDto postDto = initData();
 
         //when
         postService.create(postDto);
