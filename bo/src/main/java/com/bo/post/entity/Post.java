@@ -1,6 +1,7 @@
 package com.bo.post.entity;
 
 import com.bo.base.dto.RecordLog;
+import com.bo.post.dto.PostDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,14 @@ public class Post {
     private String content;
     @Embedded
     private RecordLog recordLog;
+
+    public static Post from(PostDto postDto) {
+        return Post.builder()
+                .title(postDto.getTitle())
+                .content(postDto.getContent())
+                .recordLog(postDto.getRecordLog())
+                .build();
+    }
 //    private Member author;
 //    private Category category;
 }
