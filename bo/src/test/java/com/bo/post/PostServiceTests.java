@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,6 +31,14 @@ public class PostServiceTests {
                 .title("title%d".formatted(num))
                 .content("content%d".formatted(num))
                 .build();
+    }
+    private List<PostDto> initDatas(int size) {
+        List<PostDto> postDtos = new ArrayList<>();
+
+        for(int i = 1; i <= size; i++) {
+            postDtos.add(initData(i));
+        }
+        return postDtos;
     }
 
     @DisplayName("create Post, then get Post by postId")
@@ -49,7 +59,7 @@ public class PostServiceTests {
 
     @DisplayName("get post by author")
     @Test
-    void test3() {
+    void test2() {
         //given
 
         //when
@@ -59,7 +69,7 @@ public class PostServiceTests {
 
     @DisplayName("modify post")
     @Test
-    void test2() {
+    void test3() {
         //given
         PostDto postDto = initData(1);
         when(postRepository.findById(any())).thenReturn(Optional.of(Post.from(postDto)));
@@ -83,5 +93,20 @@ public class PostServiceTests {
         assertThat(resultDto.getTitle()).isEqualTo("updated title");
         assertThat(resultDto.getContent()).isEqualTo("updated content");
         assertThat(resultDto.getRecordLog().getUpdatedDateTime()).isNotNull();
+    }
+    @DisplayName("delete post")
+    @Test
+    void test4() {
+        //given
+        List<PostDto> postDtos = initDatas(3);
+        //when
+        when(postService.findAll()).then(postDtos);
+        when(postService.delete(0L)).then(postDtos.remove(0));
+
+        postService.delete(0L);
+        postDtos = postService.getAll();
+
+        //then
+        assertThat(postDtos.size()).isEqualTo(2);
     }
 }
