@@ -21,4 +21,12 @@ public class PostService {
     public PostDto getById(long postId) {
         return Ut.getObjectElseException(postRepository.findById(postId)).toDto();
     }
+
+    public void update(PostDto updatedDto) {
+        Post post = Ut.getObjectElseException(postRepository.findById(updatedDto.getPostId()));
+
+        post.update(updatedDto);
+
+        postRepository.save(post);
+    }
 }
