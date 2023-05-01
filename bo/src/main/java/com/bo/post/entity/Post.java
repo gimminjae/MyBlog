@@ -31,6 +31,15 @@ public class Post {
                 .recordLog(postDto.getRecordLog())
                 .build();
     }
+
+    public PostDto toDto() {
+        return PostDto.builder()
+                .postId(this.getPostId())
+                .recordLog(this.getRecordLog())
+                .title(this.getTitle())
+                .content(this.getContent())
+                .build();
+    }
 //    private Member author;
 //    private Category category;
 }

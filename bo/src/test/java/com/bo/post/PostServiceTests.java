@@ -10,10 +10,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.anyOf;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PostServiceTests {
@@ -28,7 +34,7 @@ public class PostServiceTests {
                         .content(content)
                         .build();
     }
-    @DisplayName("create Post, then get Post")
+    @DisplayName("create Post, then get Post by postId")
     @Test
     void test1() {
         //given
@@ -36,7 +42,7 @@ public class PostServiceTests {
 
         //when
         postService.create(postDto);
-        when(postService.getById(1L).getTitle()).doReturn(postDto);
+        when(postRepository.findById(any())).thenReturn(Optional.of(Post.from(postDto)));
         PostDto resultDto = postService.getById(1L);
 
         //then
