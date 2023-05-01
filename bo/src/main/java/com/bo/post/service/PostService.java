@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,5 +29,11 @@ public class PostService {
         post.update(updatedDto);
 
         postRepository.save(post);
+    }
+    public List<PostDto> getAll() {
+        return postRepository.findAll().stream().map(Post::toDto).toList();
+    }
+    public void delete(long postId) {
+        postRepository.delete(Ut.getObjectElseException(postRepository.findById(postId)));
     }
 }
