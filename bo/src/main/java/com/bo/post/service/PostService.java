@@ -1,5 +1,6 @@
 package com.bo.post.service;
 
+import com.bo.base.util.Ut;
 import com.bo.post.dto.PostDto;
 import com.bo.post.entity.Post;
 import com.bo.post.repository.PostRepository;
@@ -18,6 +19,6 @@ public class PostService {
     }
 
     public PostDto getById(long postId) {
-        return postRepository.findById(postId).get().toDto();
+        return Ut.getObjectElseException(postRepository.findById(postId)).toDto();
     }
 }
