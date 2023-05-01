@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postNo;
+    private Long postId;
     @Column(nullable = false)
     private String title;
     @Column(columnDefinition = "LONGTEXT")
